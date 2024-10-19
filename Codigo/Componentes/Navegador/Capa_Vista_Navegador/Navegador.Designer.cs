@@ -59,11 +59,7 @@
             // 
             this.Dgv_Informacion.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.Dgv_Informacion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-
-            this.Dgv_Informacion.Location = new System.Drawing.Point(28, 664);
-
-            this.Dgv_Informacion.Location = new System.Drawing.Point(28, 637);
-
+            this.Dgv_Informacion.Location = new System.Drawing.Point(28, 643);
             this.Dgv_Informacion.Margin = new System.Windows.Forms.Padding(4);
             this.Dgv_Informacion.Name = "Dgv_Informacion";
             this.Dgv_Informacion.ReadOnly = true;
@@ -452,11 +448,7 @@
             this.Controls.Add(this.Dgv_Informacion);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Navegador";
-
-            this.Size = new System.Drawing.Size(1123, 906);
-
             this.Size = new System.Drawing.Size(1123, 900);
-
             this.Load += new System.EventHandler(this.Navegador_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Informacion)).EndInit();
             this.Tlp_Panel2.ResumeLayout(false);

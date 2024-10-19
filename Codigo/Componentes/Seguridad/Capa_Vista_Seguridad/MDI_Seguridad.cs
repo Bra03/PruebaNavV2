@@ -445,6 +445,20 @@ namespace Capa_Vista_Seguridad
 
         }
 
+        private void fACTURASToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FacturaPrueba prueba = new FacturaPrueba(idUsuario);
+            prueba.MdiParent = this;
+            prueba.Show();
+        }
+
+        private void mANTENIMIENTOToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            mantenimiento man = new mantenimiento(idUsuario);
+            man.MdiParent = this;
+            man.Show();
+        }
+
         //------------------------------------------ Fin KATERYN DE LEON y Gabriela Suc ------------------------------------------
 
 

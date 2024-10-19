@@ -36,7 +36,7 @@ namespace Capa_Vista_Navegador
         int iPosicionY = 30; // Posición Y inicial para componentes
         int iActivar = 0; // Variable para reconocer la función del botón de guardar (1. Ingresar, 2. Modificar, 3. Eliminar)
         int globalPosX = 600; // Posición inicial en X para la segunda columna
-        int globalPosY = 100; // Posición inicial en Y
+        int globalPosY = 10; // Posición inicial en Y
         int globalColumna = 0; // Contador de columnas global
         int globalFila = 0; // Contador de filas global
         string[] arrAliasCampos = new string[40]; // Alias para los campos
@@ -99,6 +99,7 @@ namespace Capa_Vista_Navegador
             LimpiarListaItems(); // Limpia la lista de items
                                  // this.AutoScaleMode = AutoScaleMode.Dpi; // Escala automática
             this.Dock = DockStyle.Fill;
+            this.AutoScroll = true;
             sUsuarioActivo = sIdUsuario; // Actualizado: nombre de la variable para el usuario activo
             sAplicacionActiva = sIdAplicacion; // Actualizado: nombre de la variable para la aplicación activa
                                                // Configuración del ToolTip
@@ -801,7 +802,7 @@ namespace Capa_Vista_Navegador
             int columnaActual = 0; // Contador de columna
             int maxFilasPorColumna = 5; // Número máximo de filas antes de cambiar de columna
             int posX = 50; // Posición inicial en X
-            int posY = 100; // Posición inicial en Y
+            int posY = 10; // Posición inicial en Y
             int desplazamientoY = 60; // Espacio vertical entre controles
 
             while (iIndex < iFin)
@@ -1830,16 +1831,23 @@ namespace Capa_Vista_Navegador
         {
             string[] arrTipos = logic.Tipos(sTablaPrincipal);
             string[] arrLlaves = logic.Llaves(sTablaPrincipal); // Llaves de la tabla principal
+            string[] arrCampos = logic.Campos(sTablaPrincipal);
             bool bTipoInt = false;
             string sAuxId = "";
             int iAuxLastId = 0;
+            string sCampoClavePrincipal = "";
 
-            // Verifica si el primer campo de la tabla principal es de tipo entero y autoincremental
-            if (arrTipos[0] == "int" && arrLlaves[0] == "PRI")
+            // Buscar el campo de clave primaria de tipo entero en la tabla principal
+            for (int i = 0; i < arrTipos.Length; i++)
             {
-                bTipoInt = true;
-                sAuxId = logic.UltimoID(sTablaPrincipal);
-                iAuxLastId = !string.IsNullOrEmpty(sAuxId) ? Int32.Parse(sAuxId) : 0;
+                if (arrTipos[i] == "int" && arrLlaves[i] == "PRI")
+                {
+                    sCampoClavePrincipal = arrCampos[i];
+                    bTipoInt = true;
+                    sAuxId = logic.UltimoID(sTablaPrincipal);
+                    iAuxLastId = !string.IsNullOrEmpty(sAuxId) ? Int32.Parse(sAuxId) : 0;
+                    break; // Campo encontrado, salir del bucle
+                }
             }
 
             iActivar = 2; // Define que se realizará una inserción
@@ -1850,7 +1858,7 @@ namespace Capa_Vista_Navegador
                 string nombreComponente = componente.Name.Replace("extra_", ""); // Elimina el prefijo "extra_" si existe
 
                 // Verifica si es el campo autoincremental en la tabla principal
-                if (componente is TextBox && bTipoInt && nombreComponente == arrLlaves[0])
+                if (componente is TextBox && bTipoInt && nombreComponente == sCampoClavePrincipal)
                 {
                     iAuxLastId += 1;
                     componente.Text = iAuxLastId.ToString();
@@ -1862,14 +1870,19 @@ namespace Capa_Vista_Navegador
                     {
                         string[] arrTiposAdicional = logic.Tipos(nombreTablaAdicional);
                         string[] arrLlavesAdicional = logic.Llaves(nombreTablaAdicional);
+                        string[] arrCamposAdicional = logic.Campos(nombreTablaAdicional);
 
-                        if (arrTiposAdicional[0] == "int" && arrLlavesAdicional[0] == nombreComponente)
+                        for (int i = 0; i < arrCamposAdicional.Length; i++)
                         {
-                            sAuxId = logic.UltimoID(nombreTablaAdicional);
-                            iAuxLastId = !string.IsNullOrEmpty(sAuxId) ? Int32.Parse(sAuxId) : 0;
-                            iAuxLastId += 1;
-                            componente.Text = iAuxLastId.ToString();
-                            componente.Enabled = false; // Bloquea el campo autoincremental
+                            if (arrCamposAdicional[i] == nombreComponente && arrTiposAdicional[i] == "int" && arrLlavesAdicional[i] == "PRI")
+                            {
+                                sAuxId = logic.UltimoID(nombreTablaAdicional);
+                                iAuxLastId = !string.IsNullOrEmpty(sAuxId) ? Int32.Parse(sAuxId) : 0;
+                                iAuxLastId += 1;
+                                componente.Text = iAuxLastId.ToString();
+                                componente.Enabled = false; // Bloquea el campo autoincremental
+                                break; // Campo encontrado, salir del bucle
+                            }
                         }
                     }
                 }

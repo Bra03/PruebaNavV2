@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Capa_Vista_Navegador">
+      <HintPath>..\..\Navegador\Capa_Vista_Navegador\bin\Debug\Capa_Vista_Navegador.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -47,6 +50,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FacturaPrueba.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FacturaPrueba.Designer.cs">
+      <DependentUpon>FacturaPrueba.cs</DependentUpon>
+    </Compile>
     <Compile Include="frm_aplicaciones.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +134,12 @@
     <Compile Include="frm_usuarios.Designer.cs">
       <DependentUpon>frm_usuarios.cs</DependentUpon>
     </Compile>
+    <Compile Include="mantenimiento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento.Designer.cs">
+      <DependentUpon>mantenimiento.cs</DependentUpon>
+    </Compile>
     <Compile Include="MDI_Seguridad.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +164,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FacturaPrueba.resx">
+      <DependentUpon>FacturaPrueba.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm_aplicaciones.resx">
       <DependentUpon>frm_aplicaciones.cs</DependentUpon>
     </EmbeddedResource>
@@ -188,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_usuarios.resx">
       <DependentUpon>frm_usuarios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento.resx">
+      <DependentUpon>mantenimiento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MDI_Seguridad.resx">
       <DependentUpon>MDI_Seguridad.cs</DependentUpon>
